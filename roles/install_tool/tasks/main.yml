@@ -1,0 +1,67 @@
+---
+
+- set_fact:
+    tool_install_dir: "{{ tools_base_dir }}/{{ tool_name }}"
+
+- name: Ensure Tools Basedir Exists
+  file:
+    path: "{{ tool_install_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: Initialize the deploy root and gather facts
+  deploy_helper:
+    path: "{{ tool_install_dir }}"
+    release: "{{ tool_version }}"
+
+- name: Ensure Tools Basedir Exists
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - "{{ deploy_helper.releases_path }}"
+    - "{{ deploy_helper.shared_path }}"
+    - "{{ deploy_helper.new_release_path }}"
+
+- name: Add an unfinished file, to allow cleanup on successful finalize
+  file:
+    path: '{{ deploy_helper.new_release_path }}/{{ deploy_helper.unfinished_filename }}'
+    state: touch
+
+- set_fact:
+    _loadDict:
+      url: "{{ tool_downloadUrl }}"
+      dest: "{{ deploy_helper.new_release_path }}/{{ tool_local_bin_name }}"
+  when: tool_install_mode == "direct"
+
+- set_fact:
+    _loadDict:
+      url: "{{ tool_downloadUrl }}"
+      dest: "{{ deploy_helper.new_release_path }}/{{ tool_downloadUrl | basename }}"
+  when: tool_install_mode == "archive"
+
+- name: Download tool and place in tool release folder
+  get_url:
+    url: "{{ _loadDict.url }}"
+    dest: "{{ _loadDict.dest }}"
+    checksum: "sha256:{{ tool_download_sha256 }}"
+
+- include_tasks: install_archive.yml
+  when: tool_install_mode == "archive"
+
+- file:
+    path: "{{ deploy_helper.new_release_path }}/{{ tool_local_bin_name }}"
+    mode: "0755"
+
+- name: Finalize the deploy, removing the unfinished file and switching the symlink
+  deploy_helper:
+    path: "{{ tool_install_dir }}"
+    release: '{{ deploy_helper.new_release }}'
+    state: finalize
+
+- name: Create a symbolic link
+  file:
+    src: "{{ deploy_helper.current_path }}/{{ tool_local_bin_name }}"
+    dest: "/usr/bin/{{ tool_local_bin_name }}"
+    state: link

@@ -1,0 +1,18 @@
+---
+
+extra_pip_modules:
+  - openshift
+  - kubernetes
+  - kubernetes-validate
+  - jmespath
+  - ansible-modules-hashivault
+  - hvac
+
+zsh_plugins:
+  - git
+  - kubectl
+  - helm
+  - vault
+  - ansible
+  - docker
+  - terraform

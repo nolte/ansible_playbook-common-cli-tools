@@ -1,0 +1,12 @@
+---
+
+- set_fact:
+    release_file_name: "{{ tool_downloadUrl | basename }}"
+
+- name: Extract Archive to release folder
+  unarchive:
+    remote_src: true
+    src: "{{ deploy_helper.new_release_path }}/{{ release_file_name }}"
+    dest: "{{ deploy_helper.new_release_path }}"
+    extra_opts: "{{ tool_unarchive_extra_opts | default([]) }}"
+    mode: "0755"

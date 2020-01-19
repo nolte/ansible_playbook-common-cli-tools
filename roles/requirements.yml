@@ -1,0 +1,4 @@
+---
+- name: gantsign.oh-my-zsh
+  src: https://github.com/gantsign/ansible-role-oh-my-zsh.git
+  version: 2.2.1
