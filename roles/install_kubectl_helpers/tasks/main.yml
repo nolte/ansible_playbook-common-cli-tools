@@ -61,3 +61,14 @@
     tool_downloadUrl: https://releases.hashicorp.com/terraform/{{ tool_version }}/terraform_{{ tool_version }}_linux_amd64.zip
     tool_local_bin_name: terraform
     tool_install_mode: archive
+
+- include_role:
+    name: install_tool
+  vars:
+    tool_name: velero
+    tool_version: v1.2.0
+    tool_download_sha256: 4080a37b487a859b5bba8391e965267cd0fe29cd67fd070b6f695fed45619e2c
+    tool_downloadUrl: https://github.com/vmware-tanzu/velero/releases/download/{{ tool_version }}/velero-{{ tool_version }}-darwin-amd64.tar.gz
+    tool_local_bin_name: velero
+    tool_install_mode: archive
+    tool_unarchive_extra_opts: [--strip-components=1]
