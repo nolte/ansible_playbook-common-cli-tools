@@ -67,7 +67,7 @@
   vars:
     tool_name: velero
     tool_version: v1.2.0
-    tool_download_sha256: 84041020bc80438b49b9b8762a17e2bbe44193ecadf9e4dfee224f8d8386ec77
+    tool_download_sha256: 4080a37b487a859b5bba8391e965267cd0fe29cd67fd070b6f695fed45619e2c
     tool_downloadUrl: https://github.com/vmware-tanzu/velero/releases/download/{{ tool_version }}/velero-{{ tool_version }}-linux-amd64.tar.gz
     tool_local_bin_name: velero
     tool_install_mode: archive
