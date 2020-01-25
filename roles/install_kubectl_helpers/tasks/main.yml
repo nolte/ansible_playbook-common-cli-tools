@@ -67,7 +67,7 @@
   vars:
     tool_name: velero
     tool_version: v1.2.0
-    tool_download_sha256: 4080a37b487a859b5bba8391e965267cd0fe29cd67fd070b6f695fed45619e2c
+    tool_download_sha256: efc23c39f4b0661f05b6cd6d71eebc5d23ed0164922de7ccbc8f914ebd255304
     tool_downloadUrl: https://github.com/vmware-tanzu/velero/releases/download/{{ tool_version }}/velero-{{ tool_version }}-darwin-amd64.tar.gz
     tool_local_bin_name: velero
     tool_install_mode: archive
